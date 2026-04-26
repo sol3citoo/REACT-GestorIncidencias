@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from './componentes/Header';
 import Footer from './componentes/Footer';
 
-export default function Incio() {
+export default function Incio(props) {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +18,10 @@ export default function Incio() {
             Ver incidencias
           </button>
           <button className="btn btn-secondary btn-lg rounded-pill px-4" onClick={() => navigate('/registrar')}>Registrar incidencia</button>
-          <button className="btn btn-dark btn-lg rounded-pill px-4" onClick={() => navigate('/')}>
+          <button className="btn btn-dark btn-lg rounded-pill px-4" onClick={() => {
+            props.logout();
+            navigate('/');
+          }}>
             Cerrar sesión
           </button>
         </div>

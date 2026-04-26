@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './componentes/Footer';
 import Header from './componentes/Header';
 
-export default function Admin() {
+export default function Admin(props) {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +17,12 @@ export default function Admin() {
           </button>
           <button className="btn btn-secondary btn-lg rounded-pill px-4" onClick={() => navigate('/registrar')}>Registrar incidencia</button>
           <button className="btn btn-secondary btn-lg rounded-pill px-4" onClick={() => navigate('/usuarios')}>Gestión de usuarios/roles</button>
-          <button className="btn btn-dark btn-lg rounded-pill px-4" onClick={() => navigate('/')}>
+          <button className="btn btn-dark btn-lg rounded-pill px-4" onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('usuario');
+            props.logout();
+            navigate('/');
+          }}>
             Cerrar sesión
           </button>
         </div>
