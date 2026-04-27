@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Header from './componentes/Header';
 import Footer from './componentes/Footer';
 
-export default function Login({ setUsuarioLogin }) {
-  // Asegúrate de usar 'email' en el estado para que coincida con el JSON
+export default function Login({ setUsuarioLogin, usuarioEstaLogueado }) {
+  
   const [form, setForm] = useState({ email: '', password: '' });
 
 
-  // Resetear el formulario cada vez que el componente se monte
   useEffect(() => {
     setForm({ email: '', password: '' });
   }, []);
@@ -15,11 +14,15 @@ export default function Login({ setUsuarioLogin }) {
   const entrar = async (e) => {
     e.preventDefault();
     
+    if (usuarioEstaLogueado) {
+      return;
+    }
+
     try {
       const resp = await fetch("http://localhost:3004/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form) // Enviamos {email, password}
+        body: JSON.stringify(form) 
       });
 
       if (resp.ok) {

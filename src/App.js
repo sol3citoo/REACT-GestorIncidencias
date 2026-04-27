@@ -5,7 +5,10 @@ import INICIO from './INICIO';
 import ADMIN from './ADMIN';
 
 function App() {
-  const [usuarioLogin, setUsuarioLogin] = useState(null);
+  const [usuarioLogin, setUsuarioLogin] = useState(() => {
+    const userSaved = localStorage.getItem('usuario');
+    return userSaved ? JSON.parse(userSaved) : null;
+  });
 
   useEffect(() => {
     const userSaved = localStorage.getItem('usuario');
@@ -24,7 +27,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={
-          !usuarioLogin ? <LOGIN setUsuarioLogin={setUsuarioLogin} /> : <Navigate to={usuarioLogin.rol === 'admin' ? '/admin' : '/inicio'} />
+          !usuarioLogin ? <LOGIN setUsuarioLogin={setUsuarioLogin} usuarioEstaLogueado={!!usuarioLogin} /> : <Navigate to={usuarioLogin.rol === 'admin' ? '/admin' : '/inicio'} />
         } /> 
         
         <Route path="/inicio" element={usuarioLogin ? <INICIO user={usuarioLogin} logout={logout} setUsuarioLogin={setUsuarioLogin} /> : <Navigate to="/" />} />
