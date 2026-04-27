@@ -28,20 +28,15 @@ export default function Login({ setUsuarioLogin, usuarioEstaLogueado }) {
       if (resp.ok) {
         const data = await resp.json();
         
-        // 2. GUARDAR DATOS (Persistencia requerida por el PDF)
-        // Guardamos el Token JWT y los datos del usuario
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('usuario', JSON.stringify(data.user));
         
-        // 3. Informar a App.js que el usuario ha entrado
         setUsuarioLogin(data.user);
         
       } else {
-        // Si el servidor responde con error (401, 400, etc.)
         alert("Credenciales incorrectas. Revisa el email o la contraseña.");
       }
     } catch (error) {
-      // Si el servidor ni siquiera responde (está apagado)
       alert("Error de conexión: ¿Has arrancado la API con 'npm run api'?");
     }
   };
@@ -55,7 +50,6 @@ export default function Login({ setUsuarioLogin, usuarioEstaLogueado }) {
         <h1 className="display-4 mb-5 fw-bold">Iniciar sesión</h1>
 
         <form onSubmit={entrar} className="d-flex gap-3 bg-white p-4 shadow-sm rounded">
-          {/* El name debe ser "email" para que coincida con el estado y el JSON */}
           <input 
             name="email" 
             type="email"
